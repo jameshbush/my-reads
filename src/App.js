@@ -2,11 +2,19 @@ import React, { Component } from 'react'
 import { ReactRouter, Route, Link } from 'react-router-dom'
 import * as BooksAPI from './BooksAPI'
 import SearchBooks from './SearchBooks'
-import Bookshelf from './Bookshelf'
+import Bookcase from './Bookcase'
 import './App.css'
 
 class BooksApp extends Component {
-  state = {}
+  state = {
+    books: []
+  }
+
+  componentDidMount() {
+    BooksAPI.getAll().then((books) => {
+      this.setState({ books })
+    })
+  }
 
   render() {
     return (
@@ -14,12 +22,16 @@ class BooksApp extends Component {
         <Route
           path='/search'
           render={({ history }) => (
-            <SearchBooks />
+            <SearchBooks
+              books={this.state.books}
+            />
         )}/>
         <Route
-          path='/bookshelf'
+          path='/bookcase'
           render={({ history }) => (
-            <Bookshelf />
+            <Bookcase
+              books={this.state.books}
+            />
         )}/>
       </div>
     )
