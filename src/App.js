@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ReactRouter, Route, Link } from 'react-router-dom'
+import { Route } from 'react-router-dom'
 import * as BooksAPI from './BooksAPI'
 import SearchBooks from './SearchBooks'
 import Bookcase from './Bookcase'
@@ -7,13 +7,19 @@ import './App.css'
 
 class BooksApp extends Component {
   state = {
-    books: []
+    books: [],
+    query: ''
   }
 
   componentDidMount() {
-    BooksAPI.getAll().then((books) => {
-      this.setState({ books })
-    })
+    BooksAPI.getAll()
+      .then((books) => {
+        this.setState({ books })
+      })
+  }
+
+  updateQuery = (query) => {
+    this.setState({ query })
   }
 
   render() {
@@ -23,14 +29,16 @@ class BooksApp extends Component {
           path='/search'
           render={({ history }) => (
             <SearchBooks
-              books={this.state.books}
+              query={this.state.query}
+              updateQuery={this.updateQuery}
             />
         )}/>
         <Route
-          path='/bookcase'
+          path='/'
           render={({ history }) => (
             <Bookcase
               books={this.state.books}
+              query={this.state.query}
             />
         )}/>
       </div>

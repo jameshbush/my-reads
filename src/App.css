@@ -44,7 +44,7 @@ body, .app {
 }
 
 .open-search {
-  position: fixed;
+  float: left;
   right: 25px;
   bottom: 25px;
 }
