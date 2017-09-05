@@ -12,11 +12,16 @@ class BookshelfChanger extends Component {
       <div className="book-shelf-changer">
         <form>
           <select onChange={this.handleChange}>
-            <option value="none" disabled>Move to...</option>
-            <option value="currentlyReading">Currently Reading</option>
-            <option value="wantToRead">Want to Read</option>
-            <option value="read">Read</option>
-            <option value="none">None</option>
+            <option value="instructions" disabled>Move to...</option>
+            {this.props.shelves.map(shelf =>
+              <option
+                key={shelf.key}
+                value={shelf.key}
+                selected={this.props.book.shelf === shelf.key}
+              >
+                {shelf.name}
+              </option>
+            )}
           </select>
         </form>
       </div>
@@ -26,7 +31,8 @@ class BookshelfChanger extends Component {
 
 BookshelfChanger.PropTypes = {
   book: PropTypes.object.isRequired,
-  update: PropTypes.func.isRequired
+  update: PropTypes.func.isRequired,
+  shelves: PropTypes.array.isRequired
 }
 
 export default BookshelfChanger

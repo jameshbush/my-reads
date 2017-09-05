@@ -10,10 +10,10 @@ class Bookcase extends Component {
     let { books, update } = this.props
     const { query } = this.props
     const emptyShelves = [
-      { books: [], key: 'currentlyReading', name: 'Currently Reading' },
-      { books: [], key: 'wantToRead', name: 'Want to Read' },
-      { books: [], key: 'read', name: 'Read' },
-      { books: [], key: 'none', name: 'None' }
+      { key: 'currentlyReading', name: 'Currently Reading' },
+      { key: 'wantToRead', name: 'Want to Read' },
+      { key: 'read', name: 'Read' },
+      { key: 'none', name: 'None' }
     ]
 
     books = this.filterBooks(books, query)
@@ -32,13 +32,13 @@ class Bookcase extends Component {
         </div>
         <div className="list-books-content">
           {shelvedBooks
-            .filter(shelf => shelf.books.length > 0)
             .map(shelf => (
-              <Bookshelf
+              shelf.books && <Bookshelf
                 key={shelf.key}
                 name={shelf.name}
                 books={shelf.books}
                 update={update}
+                shelves={emptyShelves}
               />
           ))}
         </div>
@@ -47,13 +47,14 @@ class Bookcase extends Component {
   }
 
   shelveBooks(books, shelves) {
-    const shelvedBooks = books.reduce((memo, book) => {
-      const shelf = shelves.find((s) => s.key === book.shelf) ||
-                    shelves.find((s) => s.key === 'none')
-      shelf.books.push(book)
-      return memo;
-    }, shelves)
-    return shelvedBooks;
+    books.forEach((book) => {
+      const shelf = shelves.find(s => s.key === book.shelf) ||
+                    shelves.find(s => s.key === 'none');
+
+      shelf.books || (shelf.books = []);
+      shelf.books.push(book);
+    })
+    return shelves;
   }
 
   filterBooks(books, query) {

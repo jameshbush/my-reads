@@ -4,7 +4,7 @@ import BookshelfChanger from './BookshelfChanger'
 
 class Book extends Component {
   render() {
-    const { book, update } = this.props
+    const { book, update, shelves } = this.props
 
     return (
       <div className="book">
@@ -13,6 +13,7 @@ class Book extends Component {
             <BookshelfChanger
               book={book}
               update={update}
+              shelves={shelves}
             />
         </div>
         <div className="book-title">{book.title}</div>
@@ -30,7 +31,8 @@ class Book extends Component {
 }
 
 Book.PropTypes = {
-  book: PropTypes.object.isRequired
+  book: PropTypes.object.isRequired,
+  shelves: PropTypes.array.isRequired
 }
 
 export default Book
