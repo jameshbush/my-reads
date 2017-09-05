@@ -10,15 +10,19 @@ class Book extends Component {
       <div className="book">
         <div className="book-top">
           <div className="book-cover" style={this.styleCover(book)}></div>
-            <BookshelfChanger book={book} />
+            <BookshelfChanger
+              book={book}
+              update={book.update}
+            />
         </div>
         <div className="book-title">{book.title}</div>
-        <div className="book-authors">{book.authors.join(' & ')}</div>
+        <div className="book-authors">{book.authors && book.authors.join(' & ')}</div>
       </div>
     )
   }
 
   styleCover = (book) => {
+    debugger
     return {
     width: 128,
     height: 193,

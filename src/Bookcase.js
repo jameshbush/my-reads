@@ -7,7 +7,7 @@ import sortBy from 'sort-by'
 
 class Bookcase extends Component {
   render() {
-    let { books } = this.props
+    let { books, update } = this.props
     const { query } = this.props
     const emptyShelves = [
       { books: [], key: 'currentlyReading', name: 'Currently Reading' },
@@ -17,6 +17,10 @@ class Bookcase extends Component {
     ]
     books = this.filterBooks(books, query)
     books = books.sort(sortBy('title'))
+    books = books.map(book => {
+      book.update = update
+      return book
+    })
     const shelvedBooks = this.shelveBooks(books, emptyShelves)
 
     return (

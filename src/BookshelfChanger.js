@@ -1,13 +1,25 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 class BookshelfChanger extends Component {
-  // handleSubmit makes an API call to change book data && updates state with new book info
+  state = {
+    shelf: this.props.book.shelf
+  }
+
+  handleChange = (event) => {
+    event.preventDefault()
+    const value = event.target.value
+    this.props.update(
+      this.props.book,
+      this.props.book.shelf
+    )
+  }
 
   render() {
     return (
       <div className="book-shelf-changer">
-        <form onSubmit={null/*this.handleSubmit*/}>
-          <select>
+        <form>
+          <select onChange={this.handleChange}>
             <option value="none" disabled>Move to...</option>
             <option value="currentlyReading">Currently Reading</option>
             <option value="wantToRead">Want to Read</option>
@@ -18,6 +30,11 @@ class BookshelfChanger extends Component {
       </div>
     )
   }
+}
+
+BookshelfChanger.PropTypes = {
+  book: PropTypes.object.isRequired,
+  update: PropTypes.func.isRequired
 }
 
 export default BookshelfChanger

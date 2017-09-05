@@ -22,6 +22,15 @@ class BooksApp extends Component {
     this.setState({ query })
   }
 
+  update = (book, shelf) => {
+    BooksAPI.update(book, shelf)
+    .then(BooksAPI.getAll())
+    .then((books) => {
+      this.setState({ books })
+    })
+    .catch()
+  }
+
   render() {
     return (
       <div className="app">
@@ -39,6 +48,7 @@ class BooksApp extends Component {
             <Bookcase
               books={this.state.books}
               query={this.state.query}
+              updateBook={this.updateBook}
             />
         )}/>
       </div>
