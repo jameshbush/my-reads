@@ -22,10 +22,10 @@ class BooksApp extends Component {
     this.setState({ query })
   }
 
-  update = (book, shelf) => {
+  update = ({ book={}, shelf='' }) => {
     BooksAPI.update(book, shelf)
-    .then(() => { BooksAPI.getAll() })
-    .then((books) => { this.setState({ books }) })
+    .then(() => BooksAPI.getAll())
+    .then((books) => this.setState({ books }) )
   }
 
   render() {
