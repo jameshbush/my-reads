@@ -4,7 +4,7 @@ import BookshelfChanger from './BookshelfChanger'
 
 class Book extends Component {
   render() {
-    const { book } = this.props
+    const { book, update } = this.props
 
     return (
       <div className="book">
@@ -12,7 +12,7 @@ class Book extends Component {
           <div className="book-cover" style={this.styleCover(book)}></div>
             <BookshelfChanger
               book={book}
-              update={book.update}
+              update={update}
             />
         </div>
         <div className="book-title">{book.title}</div>
@@ -22,7 +22,6 @@ class Book extends Component {
   }
 
   styleCover = (book) => {
-    debugger
     return {
     width: 128,
     height: 193,

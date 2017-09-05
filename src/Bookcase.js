@@ -17,10 +17,6 @@ class Bookcase extends Component {
     ]
     books = this.filterBooks(books, query)
     books = books.sort(sortBy('title'))
-    books = books.map(book => {
-      book.update = update
-      return book
-    })
     const shelvedBooks = this.shelveBooks(books, emptyShelves)
 
     return (
@@ -41,6 +37,7 @@ class Bookcase extends Component {
                 key={shelf.key}
                 name={shelf.name}
                 books={shelf.books}
+                update={update}
               />
           ))}
         </div>

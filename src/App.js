@@ -48,7 +48,7 @@ class BooksApp extends Component {
             <Bookcase
               books={this.state.books}
               query={this.state.query}
-              updateBook={this.updateBook}
+              updateBook={this.update}
             />
         )}/>
       </div>
