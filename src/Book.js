@@ -25,7 +25,7 @@ class Book extends Component {
     return {
     width: 128,
     height: 193,
-    backgroundImage: `url("${book.previewLink}")`
+    backgroundImage: `url("${book.imageLinks.thumbnail}")`
   }}
 }
 
