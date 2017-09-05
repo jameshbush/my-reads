@@ -13,9 +13,9 @@ class BooksApp extends Component {
 
   componentDidMount() {
     BooksAPI.getAll()
-      .then((books) => {
-        this.setState({ books })
-      })
+    .then((books) => {
+      this.setState({ books })
+    })
   }
 
   updateQuery = (query) => {
@@ -24,8 +24,18 @@ class BooksApp extends Component {
 
   update = ({ book = {}, shelf = '' }) => {
     BooksAPI.update(book, shelf)
-    .then(() => BooksAPI.getAll())
-    .then((books) => this.setState({ books }) )
+    .then(bookIdsByShelfIds => {
+      let books = this.state.books
+
+      for (const shelfId in bookIdsByShelfIds) {
+        bookIdsByShelfIds[shelfId].forEach(bookId => {
+          let book = books.find(book => book.id === bookId)
+          book.shelf = shelfId
+        })
+
+        this.setState({ books })
+      }
+    })
   }
 
   render() {
