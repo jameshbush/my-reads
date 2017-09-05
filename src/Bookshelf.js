@@ -33,7 +33,10 @@ class Bookshelf extends Component {
 }
 
 Bookshelf.PropTypes = {
-  books: PropTypes.array.isRequired
+  key: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  books: PropTypes.array.isRequired,
+  update: PropTypes.func.isRequired
 }
 
 export default Bookshelf

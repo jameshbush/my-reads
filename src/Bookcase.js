@@ -15,6 +15,7 @@ class Bookcase extends Component {
       { books: [], key: 'read', name: 'Read' },
       { books: [], key: 'none', name: 'None' }
     ]
+
     books = this.filterBooks(books, query)
     books = books.sort(sortBy('title'))
     const shelvedBooks = this.shelveBooks(books, emptyShelves)
@@ -66,7 +67,8 @@ class Bookcase extends Component {
 
 Bookcase.PropTypes = {
   books: PropTypes.array.isRequired,
-  query: PropTypes.string.isRequired
+  query: PropTypes.string.isRequired,
+  update: PropTypes.func.isRequired
 }
 
 export default Bookcase
