@@ -19,7 +19,16 @@ class BooksApp extends Component {
   }
 
   updateQuery = (query) => {
-    this.setState({ query })
+    BooksAPI.search(query, 100)
+    .then(results => {
+      let books = this.state.books
+      if (results instanceof Array && results.length > 0) {
+        results.forEach(result => {
+          books.some(b => b.id === result.id) || books.push(result)
+        })
+      }
+      this.setState({ query, books })
+    })
   }
 
   update = ({ book = {}, shelf = '' }) => {
