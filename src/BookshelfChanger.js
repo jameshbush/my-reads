@@ -8,16 +8,16 @@ class BookshelfChanger extends Component {
   }
 
   render() {
+    const { shelves, book } = this.props
     return (
       <div className="book-shelf-changer">
         <form>
-          <select onChange={this.handleChange}>
+          <select onChange={this.handleChange} defaultValue={book.shelf || 'none'}>
             <option value="instructions" disabled>Move to...</option>
-            {this.props.shelves.map(shelf =>
+            {shelves.map(shelf =>
               <option
                 key={shelf.key}
                 value={shelf.key}
-                selected={this.props.book.shelf === shelf.key}
               >
                 {shelf.name}
               </option>
