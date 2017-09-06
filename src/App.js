@@ -36,19 +36,22 @@ class BooksApp extends Component {
       this.findBookById(book.id, books).shelf = null
 
     BooksAPI.update(book, shelf).then(shelvedBookIds => {
-
-      for (const shelf in shelvedBookIds) {
-        shelvedBookIds[shelf].forEach(bookId => {
-          this.findBookById(bookId, books).shelf = shelf
-        })
-      }
-
+      books = this.updateBookShelves(books, shelvedBookIds)
       this.setState({ books })
     })
   }
 
   findBookById = (bookId, books) => {
     return books.find(book => bookId === book.id)
+  }
+
+  updateBookShelves = (books, shelvedBookIds) => {
+    for (const shelf in shelvedBookIds) {
+      shelvedBookIds[shelf].forEach(bookId => {
+        this.findBookById(bookId, books).shelf = shelf
+      })
+    }
+    return books
   }
 
   render() {
