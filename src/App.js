@@ -19,32 +19,36 @@ class BooksApp extends Component {
   }
 
   updateQuery = (query) => {
-    BooksAPI.search(query, 100)
-    .then(results => {
+    BooksAPI.search(query, 100).then(searchResults => {
       let books = this.state.books
-      if (results instanceof Array && results.length > 0) {
-        results.forEach(result => {
-          books.some(b => b.id === result.id) || books.push(result)
-        })
-      }
+
+      if (searchResults.hasOwnProperty('length') && searchResults.length > 0)
+        searchResults.forEach(result => { this.findBookById(result.id, books) || books.push(result) })
+
       this.setState({ query, books })
     })
   }
 
   update = ({ book = {}, shelf = '' }) => {
-    BooksAPI.update(book, shelf)
-    .then(bookIdsByShelfIds => {
-      let books = this.state.books
+    let books = this.state.books
 
-      for (const shelfId in bookIdsByShelfIds) {
-        bookIdsByShelfIds[shelfId].forEach(bookId => {
-          let book = books.find(book => book.id === bookId)
-          book.shelf = shelfId
+    if (shelf === 'none')
+      this.findBookById(book.id, books).shelf = null
+
+    BooksAPI.update(book, shelf).then(shelvedBookIds => {
+
+      for (const shelf in shelvedBookIds) {
+        shelvedBookIds[shelf].forEach(bookId => {
+          this.findBookById(bookId, books).shelf = shelf
         })
-
-        this.setState({ books })
       }
+
+      this.setState({ books })
     })
+  }
+
+  findBookById = (bookId, books) => {
+    return books.find(book => bookId === book.id)
   }
 
   render() {
